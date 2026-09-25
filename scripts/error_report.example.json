@@ -1,0 +1,126 @@
+{
+  "version": 1,
+  "dataset": "Exp99_32x_2_cerebellum",
+  "generated_at": "2026-09-06",
+  "segmentation": "Exp99_32x_2_cerebellum_seg_abiss_mt0600_nogt_adapted_strict",
+  "voxel_volume_um3": 7.776e-06,
+  "notes": "Morphology-class shares, not semantic estimates of glia, dendrites, or axons.",
+  "classes": [
+    {
+      "id": "through_axon",
+      "label": "Through-axon candidate",
+      "labels": 99,
+      "voxels": 3521914,
+      "volume_um3": 27.386,
+      "note": "Two detected terminal boundary contacts; no geometry flag.",
+      "segment_ids": [
+        13460,
+        17942
+      ]
+    },
+    {
+      "id": "broken_axon",
+      "label": "Possible broken axon",
+      "labels": 2262,
+      "voxels": 35926311,
+      "volume_um3": 279.367
+    },
+    {
+      "id": "flagged_axon",
+      "label": "Axon shape with geometry flag",
+      "labels": 89,
+      "voxels": 3075617,
+      "volume_um3": 23.916
+    },
+    {
+      "id": "dendrite_like",
+      "label": "Thick elongated / dendrite-like",
+      "labels": 17,
+      "voxels": 19304655,
+      "volume_um3": 150.113,
+      "margin_label": "radius above the 0.35 um axon cutoff",
+      "segments": [
+        {
+          "id": "46059",
+          "voxels": 227694,
+          "volume_um3": 1.7706,
+          "centroid_um": [
+            6.51,
+            8.16,
+            5.7
+          ],
+          "radius_um": 0.3595,
+          "length_um": 5.0568,
+          "margin": 0.0095
+        },
+        {
+          "id": "62631",
+          "voxels": 322389,
+          "volume_um3": 2.5069,
+          "centroid_um": [
+            4.08,
+            6.57,
+            2.0
+          ],
+          "radius_um": 0.363831,
+          "length_um": 6.2411,
+          "margin": 0.013831
+        }
+      ]
+    },
+    {
+      "id": "bushy_glia",
+      "label": "Bushy / glia-like",
+      "labels": 156,
+      "voxels": 22389146,
+      "volume_um3": 174.102
+    },
+    {
+      "id": "fragment",
+      "label": "Small interior fragment",
+      "labels": 5804,
+      "voxels": 24012088,
+      "volume_um3": 186.724
+    },
+    {
+      "id": "unclassified",
+      "label": "Unclassified",
+      "labels": 3133,
+      "voxels": 17503342,
+      "volume_um3": 136.106
+    }
+  ],
+  "figures": [
+    {
+      "label": "Morphology counts",
+      "path": "results/metrics.png",
+      "caption": "Counts, radius/length, orientation, continuity."
+    }
+  ],
+  "axons": [
+    {
+      "id": "44736",
+      "class": "good_axon_candidate",
+      "length_um": 13.7403,
+      "radius_um": 0.274,
+      "axis": "x",
+      "continuity": 1.0
+    },
+    {
+      "id": "598",
+      "class": "good_axon_candidate",
+      "length_um": 2.5298,
+      "radius_um": 0.084345,
+      "axis": "x",
+      "continuity": 0.904901
+    },
+    {
+      "id": "52516",
+      "class": "broken_axon_candidate",
+      "length_um": 2.0012,
+      "radius_um": 0.104506,
+      "axis": "z",
+      "continuity": 0.128501
+    }
+  ]
+}

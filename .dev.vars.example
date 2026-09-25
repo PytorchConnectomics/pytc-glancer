@@ -1,0 +1,15 @@
+# Leave both empty or remove them for an open local development server, which
+# reads the default `default` account's studies.
+# One JSON object per account: {"id","label","password"}. Studies belong to the
+# account that created them, so signing in as another one opens another set.
+PYTC_GLANCER_ACCOUNTS=[{"id":"default","label":"PyTorch Connectomics","password":"local-dev-password"},{"id":"labb","label":"Lab B","password":"another-local-password"}]
+# Legacy single-password form, used only when PYTC_GLANCER_ACCOUNTS is unset.
+# It signs in as the `default` account.
+PYTC_GLANCER_PASSWORD=
+PYTC_GLANCER_PUBLIC_STATE=true
+PYTC_GLANCER_VIEWER_ORIGINS=https://neuroglancer-demo.appspot.com
+PYTC_GLANCER_DEFAULT_VIEWER_URL=https://neuroglancer-demo.appspot.com
+PYTC_GLANCER_SOURCES=[{"id":"example_bucket","label":"Example bucket","bucket":"example_bucket","prefix":"","ngauth_base":"https://ngauth.example.org"}]
+
+# Add the service-account JSON only to .dev.vars or with `wrangler secret put`.
+# GCS_SA_KEY=

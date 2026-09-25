@@ -1,0 +1,63 @@
+{
+  "attribution": "Allen Reference Atlas \u2014 Mouse Brain, Allen Institute for Brain Science. Available from atlas.brain-map.org.",
+  "source": "Allen Brain Atlas API (atlas=1 coronal, atlas=2 sagittal)",
+  "plates": [
+    {
+      "id": "coronal-250",
+      "label": "Coronal \u00a7250",
+      "note": "Striatum, barrel cortex and amygdala.",
+      "orientation": "coronal",
+      "section": 250,
+      "file": "/atlas/coronal-250.json",
+      "regions": [
+        "amygdala",
+        "hippocampus",
+        "somatosensory",
+        "striatum",
+        "thalamus"
+      ]
+    },
+    {
+      "id": "coronal-326",
+      "label": "Coronal \u00a7326",
+      "note": "Visual cortex, hippocampus and thalamus.",
+      "orientation": "coronal",
+      "section": 326,
+      "file": "/atlas/coronal-326.json",
+      "regions": [
+        "amygdala",
+        "hippocampus",
+        "thalamus",
+        "visual"
+      ]
+    },
+    {
+      "id": "coronal-409",
+      "label": "Coronal \u00a7409",
+      "note": "Cerebellum and cochlear nuclei.",
+      "orientation": "coronal",
+      "section": 409,
+      "file": "/atlas/coronal-409.json",
+      "regions": [
+        "auditory",
+        "cerebellum",
+        "hippocampus",
+        "visual"
+      ]
+    },
+    {
+      "id": "sagittal-145",
+      "label": "Sagittal \u00a7145",
+      "note": "Whole-brain locator: all twelve divisions.",
+      "orientation": "sagittal",
+      "section": 145,
+      "file": "/atlas/sagittal-145.json",
+      "regions": [
+        "cerebellum",
+        "hippocampus",
+        "striatum",
+        "thalamus"
+      ]
+    }
+  ]
+}
