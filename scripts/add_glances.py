@@ -253,7 +253,14 @@ def read_credentials(path, account=""):
             for line in handle:
                 if line.startswith("PYTC_GLANCER_ACCOUNTS="):
                     try:
-                        accounts = json.loads(line.split("=", 1)[1].strip())
+                        value = line.split("=", 1)[1].strip()
+                        if len(value) >= 2 and value[0] == value[-1] and value[0] in {"'", '"'}:
+                            value = value[1:-1]
+                        try:
+                            accounts = json.loads(value)
+                        except json.JSONDecodeError:
+                            # Wrangler also accepts an escaped dollar in its dotenv input.
+                            accounts = json.loads(value.replace(r"\$", "$"))
                     except json.JSONDecodeError:
                         raise SystemExit(f"{path}: PYTC_GLANCER_ACCOUNTS is not valid JSON")
                 elif line.startswith("PYTC_GLANCER_PASSWORD="):

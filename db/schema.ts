@@ -1,4 +1,4 @@
-import { index, integer, sqliteTable, text, uniqueIndex } from "drizzle-orm/sqlite-core";
+import { index, integer, primaryKey, sqliteTable, text, uniqueIndex } from "drizzle-orm/sqlite-core";
 
 /* A study belongs to one account. The column carries the pre-account default
  * so the 0003 migration backfills the existing studies without a data step of
@@ -87,3 +87,36 @@ export const glanceVersions = sqliteTable("glance_versions", {
   index("idx_glance_versions_glance_id").on(table.glanceId, table.id),
   index("idx_glance_versions_operation").on(table.glanceId, table.operation)
 ]);
+
+/* A roadmap is a shared tldraw canvas owned by one account, addressed like a
+ * study. `seq` counts its writes; `schema` is the tldraw schema of the browser
+ * that wrote last, kept so a later tldraw can migrate the records on load. */
+export const roadmaps = sqliteTable("roadmaps", {
+  id: text("id").primaryKey(),
+  accountId: text("account_id").notNull(),
+  title: text("title").notNull(),
+  slug: text("slug").notNull(),
+  seq: integer("seq").notNull().default(0),
+  schema: text("schema"),
+  /* The plan a project's repository pushed for this roadmap, and how many
+   * times it has been replaced; open canvases redraw when the count moves. */
+  plan: text("plan"),
+  planRev: integer("plan_rev").notNull().default(0),
+  archivedAt: integer("archived_at"),
+  createdAt: integer("created_at").notNull(),
+  updatedAt: integer("updated_at").notNull()
+}, (table) => [uniqueIndex("idx_roadmaps_account_slug").on(table.accountId, table.slug)]);
+
+/* One row per tldraw record, so concurrent edits to different shapes do not
+ * collide. A removed record stays as a tombstone (`deleted`) until every open
+ * browser has heard of the removal. `client` names the browser session that
+ * wrote the row, which is how a browser is not sent its own changes back. */
+export const roadmapRecords = sqliteTable("roadmap_records", {
+  roadmapId: text("roadmap_id").notNull().references(() => roadmaps.id),
+  recordId: text("record_id").notNull(),
+  kind: text("kind").notNull(),
+  body: text("body").notNull(),
+  seq: integer("seq").notNull(),
+  deleted: integer("deleted").notNull().default(0),
+  client: text("client").notNull()
+}, (table) => [primaryKey({ columns: [table.roadmapId, table.recordId] }), index("idx_roadmap_records_seq").on(table.roadmapId, table.seq)]);

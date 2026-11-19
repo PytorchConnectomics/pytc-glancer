@@ -276,3 +276,21 @@ input:focus-visible, textarea:focus-visible, select:focus-visible, button:focus-
 .edit-status ul { padding-left: 1.25rem; overflow-wrap: anywhere; }
 .edit-status li { margin: 0.35rem 0; }
 .edit-badge { white-space: normal; text-align: right; }
+
+/* A roadmap page is the canvas: a slim header, and tldraw in everything below. */
+.roadmap-page { height: 100vh; height: 100dvh; display: flex; flex-direction: column; }
+.roadmap-bar { flex: 0 0 auto; height: 3.5rem; padding: 0 1rem; }
+.roadmap-bar .brand-mark { height: 30px; width: 30px; }
+.roadmap-state-saving { color: var(--cyan); }
+.roadmap-state-offline { color: var(--danger); }
+.roadmap-error { flex: 0 0 auto; margin: 0; padding: .6rem 1rem; }
+.roadmap-canvas { flex: 1 1 auto; min-height: 0; position: relative; }
+.roadmap-canvas .tl-container { position: absolute; inset: 0; }
+
+.roadmap-plan { height: 100%; overflow-y: auto; padding: 1rem clamp(1rem, 4vw, 4rem) 3rem; }
+.roadmap-plan section { max-width: 85rem; margin: 0 auto 2rem; }
+.roadmap-tasks { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); gap: 1rem; list-style: none; padding: 0; }
+.roadmap-tasks > li { padding: 1rem; background: var(--panel); border: 1px solid var(--line); border-radius: .6rem; }
+.roadmap-tasks > li:target { border-color: var(--cyan); }
+.roadmap-tasks h3 { margin: 0; }
+.roadmap-tasks p { color: var(--muted); }

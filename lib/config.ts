@@ -11,6 +11,8 @@ export interface AppConfig {
   viewerOrigins: string[];
   defaultViewerUrl: string;
   publicState: boolean;
+  /** tldraw licence key for the Roadmaps canvas; tldraw needs one on a public https host. */
+  tldrawLicenseKey: string | null;
 }
 
 interface ConfigEnv {
@@ -18,6 +20,7 @@ interface ConfigEnv {
   PYTC_GLANCER_VIEWER_ORIGINS?: string;
   PYTC_GLANCER_DEFAULT_VIEWER_URL?: string;
   PYTC_GLANCER_PUBLIC_STATE?: string;
+  PYTC_GLANCER_TLDRAW_LICENSE_KEY?: string;
 }
 
 const ID_PATTERN = /^[a-z0-9][a-z0-9_-]{0,62}$/;
@@ -94,5 +97,5 @@ export function parseConfig(env: ConfigEnv): AppConfig {
   try { defaultUrl = new URL(defaultRaw); } catch { throw new Error("PYTC_GLANCER_DEFAULT_VIEWER_URL is not a valid URL"); }
   if (defaultUrl.protocol !== "https:" || defaultUrl.username || defaultUrl.password || defaultUrl.search || defaultUrl.hash) throw new Error("PYTC_GLANCER_DEFAULT_VIEWER_URL must be https with no query, fragment, or userinfo");
   if (!viewerOrigins.includes(defaultUrl.origin)) throw new Error("PYTC_GLANCER_DEFAULT_VIEWER_URL origin is not in PYTC_GLANCER_VIEWER_ORIGINS");
-  return { sources: parseSources(env.PYTC_GLANCER_SOURCES), viewerOrigins, defaultViewerUrl: defaultUrl.toString().replace(/\/$/, ""), publicState: env.PYTC_GLANCER_PUBLIC_STATE !== "false" };
+  return { sources: parseSources(env.PYTC_GLANCER_SOURCES), viewerOrigins, defaultViewerUrl: defaultUrl.toString().replace(/\/$/, ""), publicState: env.PYTC_GLANCER_PUBLIC_STATE !== "false", tldrawLicenseKey: env.PYTC_GLANCER_TLDRAW_LICENSE_KEY?.trim() || null };
 }

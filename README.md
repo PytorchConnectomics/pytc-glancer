@@ -2,7 +2,7 @@
 
 pytc_glancer organizes named, permanent Neuroglancer views of OME-Zarr datasets into Studies. The app stores only Study metadata and Neuroglancer state JSON in Cloudflare D1. Image chunks never pass through pytc_glancer: Neuroglancer reads them directly from Google Cloud Storage through the configured `ngauth` broker.
 
-The home page has two tabs. **Studies** is the workspace above; **Volumes** is a catalog of public volumetric datasets placed on the Allen Reference Atlas, described below, and is shown only to the account whose catalog it is.
+The home page has Studies, Roadmaps and account-specific Volumes tabs. **Studies** is the workspace above; **Volumes** is a catalog of public volumetric datasets placed on the Allen Reference Atlas, described below, and is shown only to the account whose catalog it is.
 
 ## Accounts
 
@@ -260,6 +260,14 @@ After changing the checkout, rebuild with `npm run build` and restart the servic
 ```sh
 npx wrangler d1 migrations apply pytc-glancer-local --local --config wrangler.jsonc --persist-to "$STATE_DIR"
 ```
+
+## The Roadmaps tab
+
+A roadmap is a shared [tldraw](https://tldraw.dev) canvas owned by an account: boxes for tasks, arrows for what depends on what, edited in the browser by everyone signed in to that account. The tab lists the account's roadmaps; each opens at `/roadmap/<slug>`.
+
+A canvas is stored in D1 as its tldraw records, one row each (`roadmap_records`), not as one document. A browser sends the records it changed and receives the ones other browsers changed in a single request, `POST /api/roadmaps/<slug>/changes`, repeated every two seconds; there is no socket. The last write to one record wins, so people editing different boxes never overwrite each other. Cursors and selections are not shared. A pasted image is stored inside its record and is refused above 1.5 MB.
+
+tldraw is not open source. Its SDK runs without a key on `localhost` and over plain http; on a public https host it stops drawing after five seconds unless `PYTC_GLANCER_TLDRAW_LICENSE_KEY` holds a key issued for that hostname (a trial, hobby or commercial licence from tldraw.dev). On public HTTPS without a key, Glancer displays the published task plan with owners, statuses and dependency links in a read-only view. The key is sent to the browser, which is how tldraw checks it. tldraw loads its fonts and icons from `cdn.tldraw.com`.
 
 ## The Volumes tab
 
