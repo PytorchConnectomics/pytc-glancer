@@ -3,12 +3,14 @@
 import { useEffect, useState } from "react";
 import AccountBadge from "./account-badge";
 import { useSession } from "./session";
+import RoadmapsClient from "./roadmaps-client";
 import StudiesClient from "./studies-client";
 import VolumesClient from "./volumes-client";
 import { DEFAULT_ACCOUNT_ID } from "../lib/accounts";
 
 const TABS = [
   { id: "studies", label: "Studies", note: "OME-Zarr view index" },
+  { id: "roadmaps", label: "Roadmaps", note: "Shared planning canvases" },
   { id: "volumes", label: "Volumes", note: "Allen atlas dataset inventory" },
 ] as const;
 
@@ -35,6 +37,8 @@ export default function HomeClient() {
   // Volumes fetches atlas geometry on mount, so it is not built until the tab is
   // first opened. After that it stays mounted and keeps its state.
   const [volumesOpened, setVolumesOpened] = useState(false);
+  // Roadmaps asks for its list on mount, so it too waits for its first opening.
+  const [roadmapsOpened, setRoadmapsOpened] = useState(false);
 
   // The tab lives in the fragment so a view is linkable and survives reload,
   // without the server ever needing to know which one is open.
@@ -43,6 +47,7 @@ export default function HomeClient() {
       const next = tabFromHash(window.location.hash);
       setTab(next);
       if (next === "volumes") setVolumesOpened(true);
+      if (next === "roadmaps") setRoadmapsOpened(true);
     };
     sync();
     window.addEventListener("hashchange", sync);
@@ -60,6 +65,7 @@ export default function HomeClient() {
   function choose(next: TabId) {
     setTab(next);
     if (next === "volumes") setVolumesOpened(true);
+    if (next === "roadmaps") setRoadmapsOpened(true);
     // replaceState keeps the back button meaning "the page before this one".
     history.replaceState(null, "", next === "studies" ? window.location.pathname : `#${next}`);
   }
@@ -86,6 +92,9 @@ export default function HomeClient() {
       * loaded study list and the fetched atlas plate; the inactive one hides. */}
     <div role="tabpanel" id="panel-studies" aria-labelledby="tab-studies" hidden={shown !== "studies"}>
       <StudiesClient />
+    </div>
+    <div role="tabpanel" id="panel-roadmaps" aria-labelledby="tab-roadmaps" hidden={shown !== "roadmaps"}>
+      {roadmapsOpened && <RoadmapsClient />}
     </div>
     {volumes && <div role="tabpanel" id="panel-volumes" aria-labelledby="tab-volumes" hidden={shown !== "volumes"}>
       {volumesOpened && <VolumesClient />}

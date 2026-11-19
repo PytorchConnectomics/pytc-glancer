@@ -10,6 +10,7 @@ import { datasetFromState, figureObjectName, parseReport, reportObjectName } fro
 import { MAX_REVIEW_BYTES, emptyReview, parseReview, reviewIsEmpty } from "./review";
 import { generateStateFromStore } from "./omezarr/generate";
 import { resolveSourcePath } from "./sources";
+import { routeRoadmaps } from "./roadmaps";
 
 interface StudyRow {
   id: string;
@@ -672,6 +673,8 @@ async function routeApi(request: Request, db: D1Database, config: AppConfig, act
   // another account shows the workspace it actually reads.
   if (parts[1] === "session" && parts.length === 2 && request.method === "GET") return json(actor, 200, { "Cache-Control": "no-store" });
   if (parts[1] === "sources" && parts.length === 2 && request.method === "GET") return listSources(request, db);
+  const roadmap = await routeRoadmaps(request, db, config, actor, parts);
+  if (roadmap) return roadmap;
   if (parts[1] === "studies" && parts.length === 2) {
     if (request.method === "GET") return listStudies(request, db, actor);
     if (request.method === "POST") return createStudy(request, db, actor);

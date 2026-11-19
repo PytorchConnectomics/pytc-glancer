@@ -36,6 +36,20 @@
       "when": 1790142789548,
       "tag": "0004_dear_catseye",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1794842963138,
+      "tag": "0005_dapper_ozymandias",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "6",
+      "when": 1794843735335,
+      "tag": "0006_smiling_iron_lad",
+      "breakpoints": true
     }
   ]
 }

@@ -11,5 +11,9 @@ PYTC_GLANCER_VIEWER_ORIGINS=https://neuroglancer-demo.appspot.com
 PYTC_GLANCER_DEFAULT_VIEWER_URL=https://neuroglancer-demo.appspot.com
 PYTC_GLANCER_SOURCES=[{"id":"example_bucket","label":"Example bucket","bucket":"example_bucket","prefix":"","ngauth_base":"https://ngauth.example.org"}]
 
+# tldraw licence key for the Roadmaps canvas. Not needed on localhost; required
+# on a public https host, and issued per hostname.
+# PYTC_GLANCER_TLDRAW_LICENSE_KEY=
+
 # Add the service-account JSON only to .dev.vars or with `wrangler secret put`.
 # GCS_SA_KEY=

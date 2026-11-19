@@ -171,7 +171,7 @@ test("the volumes tab is offered only to the account whose catalog it is", async
   let root = createRoot(container);
   await act(async () => { root.render(createElement(HomeClient)); });
   await settle();
-  assert.deepEqual(tabs(), ["Studies"], "an account without a volumes catalog is not offered the tab");
+  assert.deepEqual(tabs(), ["Studies", "Roadmaps"], "an account without a volumes catalog is not offered the tab");
   assert.equal(document.querySelector("#panel-volumes"), null, "the volumes panel must not be rendered at all");
   // `#volumes` in the URL must not leave the page on a panel it will not draw.
   assert.equal(document.querySelector("#panel-studies")?.hasAttribute("hidden"), false);
@@ -181,7 +181,7 @@ test("the volumes tab is offered only to the account whose catalog it is", async
   root = createRoot(container);
   await act(async () => { root.render(createElement(HomeClient)); });
   await settle();
-  assert.deepEqual(tabs(), ["Studies", "Volumes"]);
+  assert.deepEqual(tabs(), ["Studies", "Roadmaps", "Volumes"]);
   assert.equal(document.querySelector("#panel-studies")?.hasAttribute("hidden"), true, "the #volumes fragment must open the volumes panel");
 
   await act(async () => { root.unmount(); });
